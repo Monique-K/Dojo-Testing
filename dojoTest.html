@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+  <head>
+    <title>Exploring Dojo</title>
+  </head>
+  <body>
+    <h1>Exploring Dojo</h1>
+    <div id="message">This is a DIV element with id attribute message.</div>
+    <ul id="list">
+        <li>This is the first item in a list</li>
+        <li class="highlight">This is the second item in a list</li>
+        <li>This is the third item in a list</li>
+    </ul>
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js" data-dojo-config="isDebug:1, async:1">
+    </script>
+    <script>
+      require(["dojo"], function(dojo){
+        dojo.ready(function(){  
+          dojo.create(
+                "div",
+                {
+                    "innerHTML": "Hello, World!"
+                },
+                dojo.body()
+            );        
+          });
+      });
+    </script>
+  </body>
+</html>
