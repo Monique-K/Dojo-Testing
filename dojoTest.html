@@ -10,10 +10,12 @@
         <li class="highlight">This is the second item in a list</li>
         <li>This is the third item in a list</li>
     </ul>
+    <!-- <span id="placeHolder">this will be replaced</span> -->
     <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js" data-dojo-config="isDebug:1, async:1">
     </script>
     <script>
       require(["dojo"], function(dojo){
+
         dojo.ready(function(){  
 
           dojo.create(
@@ -28,7 +30,20 @@
           let message = dojo.byId("message");
           dojo.connect(message, "onclick", function() {
             message.innerHTML = "You changed me!!!"
+            dojo.style(message, {
+              fontWeight: "bold",
+              color: "red"
+            })
           });
+
+          // require(["dijit/ColorPalette"], function(ColorPalette){
+          //     let myPalette = new ColorPalette({
+          //         palette: "7x10",
+          //         onChange: function(val){ alert(val); }
+          //     }, "placeHolder").startup();
+          // });
+
+
       });
     </script>
   </body>
