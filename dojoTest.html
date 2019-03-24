@@ -44,11 +44,17 @@
             })
           })
 
-          on(theDiv, "mouseleave", function(e) {
+          let toWhite = on(theDiv, "mouseleave", function(e) {
             dojo.style(theDiv, {
               backgroundColor: "white"
             })
+              // Remove this event handler after the first use
+              toWhite.remove();
+              dojo.style(theDiv, {
+              backgroundColor: "yellow"
+            })
           })
+
 
           // require(["dijit/ColorPalette"], function(ColorPalette){
           //     let myPalette = new ColorPalette({
