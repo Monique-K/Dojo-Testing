@@ -11,6 +11,9 @@
         <li>This is the third item in a list</li>
     </ul>
     <button class="button">Click me!</button>
+    <br />
+    <br />
+    <div id="big-div" style="height: 50px; border: 1px solid blue"></div>
     <!-- <span id="placeHolder">this will be replaced</span> -->
     <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js" data-dojo-config="isDebug:1, async:1">
     </script>
@@ -31,6 +34,20 @@
           on(buttons, "click", function(e) {
             console.log("button", buttons)
             buttons.innerHTML = "You did it!";
+          })
+
+          let theDiv = dojo.byId("big-div");
+
+          on(theDiv, "mouseover", function(e) {
+            dojo.style(theDiv, {
+              backgroundColor: "blue"
+            })
+          })
+
+          on(theDiv, "mouseleave", function(e) {
+            dojo.style(theDiv, {
+              backgroundColor: "white"
+            })
           })
 
           // require(["dijit/ColorPalette"], function(ColorPalette){
