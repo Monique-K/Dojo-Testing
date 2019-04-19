@@ -3,6 +3,8 @@
     <title>Exploring Dojo</title>
   </head>
   <body>
+      <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js" data-dojo-config="isDebug:1, async:1">
+      </script>
     <h1>Exploring Dojo</h1>
     <div id="message">This is a DIV element with id attribute message.</div>
     <ul id="list">
@@ -19,22 +21,11 @@
       <div id="right" style="border: 1px solid rgb(25, 98, 121); width: 68%; margin-left: 2%"></div>
     </div>
     <br />
-    <form>
-      Filter Options:
-      <br />
-      <label for="rating">Filter by rating at or above:</label>
-      <input id="rating-box" type="text" name="rating" value="Rating"
-          data-dojo-type="dijit/form/TextBox"
-          data-dojo-props="trim:true, propercase:true" id="firstname" />
-      <button>Filter</button>
-    </form>
-    <!-- <span id="placeHolder">this will be replaced</span> -->
-    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js" data-dojo-config="isDebug:1, async:1">
-    </script>
     <script>
-      require(["dojo", "dojo/on", "dojo/parser", "dijit/form/TextBox"], function(dojo, on, parser, textBox){
-
-          let store = [
+        require(["dojo/parser", "dijit/registry", "dojo/on", "dijit/form/TextBox", "dojo/domReady!"],
+        function(parser, registry, on){
+          parser.parse();
+        let store = [
             {
               name: "Pooper",
               colour: "gray",
@@ -65,8 +56,88 @@
               colour: "black",
               rating: 7.5
             }
-            ]
+            ];
 
+            var form = dojo.byId("form");
+            var input = dojo.byId("rating-box")
+            var inputValue = input.get("value");
+
+        //   on(input, "change", function(){
+        //  input.set("value", input.get("value") + " modified");
+          
+          var filter = (num) => {
+          let cats = [];
+          for (var i = 0; i < store.length; i ++) {
+            if (store[i].rating >= parseInt(num)) {
+              console.log("hi")
+              var div = `<div>${store[i].name}: ${store[i].rating}</div>`
+              cats.push(div);
+            }
+          }
+          console.log("filter", cats)
+          return cats
+        }
+
+        var handleFilter = (e) => {
+        //   e = e || window.event;
+        // var target = e.target || e.srcElement;
+        e.preventDefault();
+        var cats = filter(input);
+        console.log(input)
+
+        for (var i = 0; i < cats.length; i ++) {
+            dojo.place(cats[i])
+          console.log(num, cats)
+          }
+        return false;
+      }
+    });
+      </script>
+    <form id="form" onsubmit="handleFilter()">
+      Filter Options:
+      <br />
+      <label for="rating">Filter by rating at or above:</label>
+      <input id="rating-box" type="text" name="rating" value=""
+          data-dojo-type="dijit/form/TextBox"
+          data-dojo-props="trim:true, propercase:true, intermediateChanges:true" />
+      <button type="submit">Filter</button>
+    </form>
+    <!-- <span id="placeHolder">this will be replaced</span> -->
+    <script>
+      require(["dojo", "dojo/on", "dojo/parser", "dijit/registry", "dijit/form/TextBox"], function(dojo, on, parser, registry,   textBox){
+        
+        let store = [
+            {
+              name: "Pooper",
+              colour: "gray",
+              rating: 8
+            },
+            {
+              name: "Sammy",
+              colour: "black",
+              rating: 9
+            },
+            {
+              name: "Mustard",
+              colour: "calico",
+              rating: 9
+            },
+            {
+              name: "Plum",
+              colour: "gray",
+              rating: 9
+            },
+            {
+              name: "Billy",
+              colour: "gray",
+              rating: 7
+            },
+            {
+              name: "Shadow",
+              colour: "black",
+              rating: 7.5
+            }
+            ];
 
           let message = dojo.byId("message");
           dojo.connect(message, "onclick", function() {
@@ -104,18 +175,19 @@
           })
 
           var leftDiv = dojo.byId("left");
+          var rightDiv = dojo.byId("right");
+          var div = "<h2>The Cats:</h2>"
+          
+          dojo.place(div, leftDiv);
           
           var  fillLeft = () => {
             for (var i = 0; i < store.length; i ++) {
-              var node = "<div>{store[i].name}: {store[i].rating}</div>"
+              var node = `<div>${store[i].name}: ${store[i].rating}</div>`
               dojo.place(node, leftDiv, "below")
             }
           }
-
-
-          parser.parse();
-          var ratingBox = dojo.byId("rating-box");
-          var form = dojo.byId("")
+          fillLeft();         
+         
 
 
           // require(["dijit/ColorPalette"], function(ColorPalette){
